@@ -1,0 +1,79 @@
+import types
+def listify(data):
+    the_list = []
+
+    # SET, TUPLE, RANGE, GENERATOR
+    if isinstance(data, (set, tuple, range, types.GeneratorType)):
+        for item in data:
+            the_list.append(item)
+
+    # STRING
+        # make a list of each word ( basically like split() )
+    elif isinstance(data, str):
+        word = ""
+        for char in data:
+            if ord(char) == 32:
+                if word:
+                    the_list.append(word)
+                    word = ""
+            else:
+                if char.isalpha() or char == "-":
+                    word += char
+        if word:
+            the_list.append(word)
+
+    # DICT 
+        # Make lists of keys and values
+    elif isinstance(data, dict):
+        for k,v in data.items():
+            the_list.append([k,v])
+
+    # LIST
+    elif isinstance(data, list):
+        return data
+
+    return the_list
+
+# Set
+set_object = {2,3,4}
+print("Original data type:", type(set_object))
+print("Resulting data type:", type(listify(set_object)))
+print(listify(set_object), "\n")
+
+# Tuple
+tuple_object = (2,3)
+print("Original data type:", type(tuple_object))
+print("Resulting data type:", type(listify(tuple_object)))
+print(listify(tuple_object), "\n")
+
+# Range
+range_object = range(3,9)
+print("Original data type:", type(range_object))
+result = listify(range_object)
+print("Resulting data type:", type(result), "\n", result, "\n")
+
+# Generator
+gen = (x for x in range(3))
+result = listify(gen)
+print("Original data type:", type(gen))
+print("Resulting data type:", type(result), "\n", result, "\n")
+
+
+# String
+string = "Hello, this is a clean-cut sentence, okay?"
+print("Original data type:", type(string))
+print("Resulting data type:", type(listify(string)))
+print(listify(string), "\n")
+
+# Dictionary
+dictionary = {'a': 1, 'b': 2, 'c': 3}
+result = listify(dictionary)
+print("Original data type:", type(dictionary))
+print("Resulting data type:", type(listify(dictionary)))
+print(listify(dictionary), "\n")
+
+# List
+list_object = [1,2,3,4]
+print("Original data type:", type(list_object))
+print("Resulting data type:", type(listify(list_object)))
+print(listify(list_object), "\n")
